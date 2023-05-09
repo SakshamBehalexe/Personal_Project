@@ -1,0 +1,52 @@
+body
+{
+    color:black ;
+    background-color: w;
+    text-align: justify;
+    font-size: 20px;
+    text-align: justify;
+    /* line-height: 35px; */
+    /* columns: 250px 3; */
+    /* column-gap: 40px; */
+}
+footer
+{
+    color: black;
+    position : absolute;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    height : auto !important;
+}
+ul
+{
+    line-height: 35px;
+    /* columns: 375px 2; */
+    /* column-gap: 10px; */
+}
+
+h1
+{
+    color: turquoise;
+    background-color: navy;
+    text-align: center;
+}
+h2
+{
+    color: rgb(0, 0, 0);
+    background-color: aqua;
+    text-align: center;
+}
+h3
+{
+    color: rgb(0, 0, 0);
+    background-color: aqua;
+    text-align: center;
+}
+dt
+{
+    color: black;
+    text-align: center;
+    background-color: lightblue;
+}
+

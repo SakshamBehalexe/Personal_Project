@@ -1,0 +1,81 @@
+
+ [
+      {
+        "id": 0,
+        "name": "Light",
+        "user": "alex",
+        "sensorData": [
+          {
+            "Power": true,
+            "Brightness": 56
+          },
+          {
+            "Power": false,
+            "Brightness": 0
+          }
+        ],
+        "role": "Light"
+      },
+      {
+        "id": 1,
+        "name": "Ac_1",
+        "user": "Saksham",   
+        "sensorData": [
+          {
+            "Temperature": 18,
+            "Mode": "cool",
+            "Fan Speed": "auto"
+          },
+            {
+                "Temperature": 20,
+                "Mode": "cool",
+                "Fan Speed": "auto"
+            }
+        ],
+        "role": "AC"
+      },
+      {
+        "id": 2,
+        "name": "Door_1",
+        "user": "alex",
+        "sensorData": [
+          {
+            "Open": true
+          },
+          {
+            "Open": false
+          }
+        ],
+        "role": "Security"
+      },
+      {
+        "id" : 3,
+        "name" : "Camera_1",
+        "user" : "Saksham",
+        "sensorData" : [
+          {
+            "Open" : true
+          },
+          {
+            "Open" : false
+          }
+        ],
+          "role" : "Security"
+      },
+      {
+        "id" : 4,
+        "name": "TS",
+        "user" : "Saksham",
+        "sensorData" : [
+          {
+            "Temperature" : 20,
+            "Humidity" : 50
+          },
+          {
+            "Temperature" : 21,
+            "Humidity" : 51
+          }
+        ],
+        "role" : "Security"
+      }
+    ]

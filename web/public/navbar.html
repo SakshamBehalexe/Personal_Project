@@ -1,0 +1,39 @@
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        function isActive(route) {
+          return window.location.pathname === route ? 'active' : '';
+        }
+  
+        $('.nav-link').each(function() {
+          $(this).addClass(isActive($(this).attr('href')));
+        });
+      });
+    </script>
+  </head>
+  
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Logo</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item ${isActive('/')}">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item ${isActive('/register-device')}">
+          <a class="nav-link" href="/register-device">Register Device</a>
+        </li>
+        <li class="nav-item ${isActive('/device-list')}">
+          <a class="nav-link" href="/device-list">Device List</a>
+        </li>
+        <li class="nav-item ${isActive('/delete-device')}">
+          <a class="nav-link" href="/delete-device">Delete Device</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  
