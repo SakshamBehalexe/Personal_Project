@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Temperature Display</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    #temperatureContainer {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .temperature-card {
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .temperature-card h2 {
+      margin: 0;
+      color: #333;
+    }
+
+    .temperature-card p {
+      margin: 5px 0;
+      color: #777;
+    }
+
+    .error-message {
+      color: red;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Temperature Display</h1>
+  <div id="temperatureContainer"></div>
+
+  <script>
+    $(document).ready(() => {
+      // Fetch temperature data from the API endpoint
+      $.ajax({
+        url: 'http://localhost:5003/temperatures',
+        method: 'GET',
+        success: function(data) {
+          // Process the retrieved temperature data
+          if (data.length > 0) {
+            // Display temperature data
+            for (let i = 0; i < data.length; i++) {
+              const temperature = data[i].temperature;
+              const humidity = data[i].humidity;
+              const sensorId = data[i].sensorId;
+              const timestamp = new Date(data[i].timestamp).toLocaleString();
+
+              const temperatureCard = `
+                <div class="temperature-card">
+                  <h2>Temperature: ${temperature} &deg;C</h2>
+                  <p>Humidity: ${humidity}%</p>
+                  <p>Sensor ID: ${sensorId}</p>
+                  <p>Timestamp: ${timestamp}</p>
+                </div>
+              `;
+              $('#temperatureContainer').append(temperatureCard);
+            }
+          } else {
+            // No temperature data found
+            $('#temperatureContainer').html('<p>No temperature data available.</p>');
+          }
+        },
+        error: function(xhr, status, error) {
+          // Display error message if request fails
+          const errorMessage = `Error: ${xhr.status} - ${error}`;
+          $('#temperatureContainer').html(`<p class="error-message">${errorMessage}</p>`);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

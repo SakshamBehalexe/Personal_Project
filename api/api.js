@@ -4,6 +4,26 @@ const Device = require('./models/device');
 
 const bodyParser = require('body-parser');
 
+const temperatureSchema = new mongoose.Schema({
+  sensorId: {
+    type: String,
+    required: true
+  },
+  temperature: {
+    type: Number,
+    required: true
+  },
+  humidity: {
+    type: Number,
+    required: true
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+const Temperature = mongoose.model('Temperature', temperatureSchema);
 
 mongoose.connect('mongodb+srv://saksham4801be21:54Z6B1uXtkvfKYhp@cluster0.m9erqgc.mongodb.net/mydb', {useNewUrlParser: true, useUnifiedTopology: true })
 .then(() =>{
@@ -50,7 +70,7 @@ app.get('/api/test', (req, res) => {
 });
 
 /**
- * @api {get} /devices AllDevices An array of all devices
+ * @api {get} /devices AllDevices
  * @apiGroup Device
  * @apiSuccessExample {json} Success-Response:
  *  [
@@ -63,25 +83,27 @@ app.get('/api/test', (req, res) => {
  *          "ts": "1529542230",
  *          "temp": 12,
  *          "loc": {
-*          "lat": -37.84674,
-*          "lon": 145.115113
-*        }
-*      ]
-*    }
-*  ]
-* @apiErrorExample {json} Error-Response:
-*  {
-*    "User does not exist"
-*  }
-*/
+ *            "lat": -37.84674,
+ *            "lon": 145.115113
+ *          }
+ *        }
+ *      ],
+ *     "role": "light"
+ *    }
+ *  ]
+ * @apiErrorExample {json} Error-Response:
+ *  {
+ *    "User does not exist"
+ *  }
+ */
 app.get('/devices', (req, res) => {
- Device.find({})
-   .then(devices => {
-     res.send(devices);
-   })
-   .catch(error => {
-     res.send(error);
-   });
+  Device.find({})
+    .then(devices => {
+      res.send(devices);
+    })
+    .catch(error => {
+      res.send(error);
+    });
 });
 
 /**
@@ -133,7 +155,8 @@ app.post('/devices', (req, res) => {
 *           "lon": 145.117683
 *         }
 *       }
-*     ]
+*     ],
+*     "role": "light"
 *   }
 * @apiErrorExample {text} Error-Response:
 *   Device not found
@@ -172,6 +195,18 @@ app.delete('/devices/:id', async (req, res) => {
    res.status(500).json({ error: 'Error deleting device' });
  }
 });
+
+// API endpoint to get all temperature data
+app.get('/temperatures', async (req, res) => {
+  try {
+    const data = await Temperature.find({});
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

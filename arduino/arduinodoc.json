@@ -1,0 +1,7 @@
+{
+    "name": "Arduino Server",
+    "version": "1.0.0",
+    "description": "Reads the Arduino output from the serial port",
+    "title": "Arduino Reader",
+    "url": "http://localhost:5001"
+  }

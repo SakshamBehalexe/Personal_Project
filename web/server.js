@@ -36,6 +36,11 @@ app.get('/light', function(req, res)
     res.sendFile(`${base}/light.html`);
 });
 
+app.get('/temp', function(req, res) 
+{
+    res.sendFile(`${base}/temp.html`);
+});
+
 app.get('/security', function(req, res) 
 {
     res.sendFile(`${base}/security.html`);
