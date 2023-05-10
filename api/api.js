@@ -207,6 +207,33 @@ app.get('/temperatures', async (req, res) => {
   }
 });
 
+// Define IR sensor schema and model
+const irSensorSchema = new mongoose.Schema({
+  status: {
+    type: String,
+    required: true
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+const IRSensor = mongoose.model('IRSensor', irSensorSchema, 'IR_sensor');
+
+
+// API endpoint to get the most recent IR sensor data
+app.get('/ir', async (req, res) => {
+  try {
+    const data = await IRSensor.findOne({}, {}, { sort: { timestamp: -1 } });
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

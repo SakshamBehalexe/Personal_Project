@@ -1,6 +1,13 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const https = require('https');
+const fs = require('fs');
+var sslOptions = {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem'),
+    passphrase: 'pass'
+    };
 
 const port = 3000;
 
@@ -31,9 +38,17 @@ app.get('/', function(req, res) {
     res.sendFile(`${base}/welcome.html`);
 });
 
+// var server = https.createServer(sslOptions, app).listen(port, function(){
+//     console.log("Express server listening on port " + port);
+//     });
+
 app.get('/light', function(req, res) 
 {
     res.sendFile(`${base}/light.html`);
+});
+app.get('/arduino-light', function(req, res) 
+{
+    res.sendFile(`${base}/arduino-light.html`);
 });
 
 app.get('/temp', function(req, res) 
@@ -87,7 +102,6 @@ app.post('/set-ac', (req, res) => {
     // Send a response back to the client
     res.json({ message: 'AC settings updated successfully' });
   });
-  
 
 app.listen(port, function() {
     console.log(`Listening on port ${port}`);

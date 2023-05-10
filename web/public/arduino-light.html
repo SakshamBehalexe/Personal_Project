@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IR Sensor LED Control</title>
+  <style>
+    .led {
+      width: 100px;
+      height: 100px;
+      background-color: gray;
+    }
+    .led.on {
+      background-color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>IR Sensor LED Control</h1>
+  <div class="led"></div>
+
+  <script>
+    // Function to control the LED based on API data
+    function controlLED(data) {
+      const led = document.querySelector('.led');
+
+      if (data && Object.keys(data).length > 0) {
+        const status = data.status;
+
+        if (status === 'Motion Detected') {
+          led.classList.add('on');
+          setTimeout(() => {
+            led.classList.remove('on');
+          }, 2000);
+        }
+      }
+
+      // Fetch data from the API endpoint again after 2 seconds
+      setTimeout(() => {
+        fetch('http://localhost:5003/ir') // Assuming the HTML file is served from the same server as the API
+          .then(response => response.json())
+          .then(data => controlLED(data))
+          .catch(error => console.error(error));
+      }, 2000);
+    }
+
+    // Fetch data from the API endpoint
+    fetch('http://localhost:5003/ir') // Assuming the HTML file is served from the same server as the API
+      .then(response => response.json())
+      .then(data => controlLED(data))
+      .catch(error => console.error(error));
+  </script>
+</body>
+</html>

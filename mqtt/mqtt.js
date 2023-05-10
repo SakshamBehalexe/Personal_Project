@@ -57,6 +57,20 @@ const temperatureSchema = new mongoose.Schema({
 
 const Temperature = mongoose.model('Temperature', temperatureSchema);
 
+// Define IR sensor schema and model
+const irSensorSchema = new mongoose.Schema({
+  status: {
+    type: String,
+    required: true
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+const IRSensor = mongoose.model('IRSensor', irSensorSchema, 'IR_sensor');
+
 const client = mqtt.connect('mqtt://broker.hivemq.com:1883');
 
 client.on('connect', () => {
@@ -66,6 +80,34 @@ client.on('connect', () => {
     }
   });
 });
+
+client.on('connect', () => {
+  console.log('Connected to MQTT broker');
+
+  // Subscribe to the topic to receive data
+  client.subscribe('ir_t_s'); // Replace with your MQTT topic
+
+  // Handle incoming MQTT messages
+  client.on('message', async (topic, message) => {
+    if (topic === 'ir_t_s') { // Replace with your MQTT topic
+      try {
+        const irData = JSON.parse(message.toString());
+
+        // Create a new IR sensor object
+        const irSensorData = new IRSensor({
+          status: irData.status,
+        });
+
+        // Save the IR sensor data to MongoDB
+        await irSensorData.save();
+        console.log('IR sensor data saved to MongoDB');
+      } catch (error) {
+        console.error('Error saving IR sensor data:', error);
+      }
+    }
+  });
+});
+
 
 const { v4: uuidv4 } = require('uuid');
 
